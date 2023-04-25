@@ -9,6 +9,20 @@ namespace Platformer
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        internal const int Gravity = 5;
+
+        Transform GO_Transform;
+        ActorObject player;
+
+        Texture2D playerIdle;
+        Texture2D playerRun;
+        Texture2D playerJump;
+
+        //Platform p
+
+        Rectangle testRect = new Rectangle(0, 0, 48, 48);
+        CelAnimationSet playerSet;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);

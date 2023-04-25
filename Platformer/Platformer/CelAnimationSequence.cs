@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace PlatformerGame
+namespace Platformer
 {
     /// <summary>
     /// Represents a cel animated texture.

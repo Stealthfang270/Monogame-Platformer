@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGameExtensions;
 
-namespace PlatformerGame
+namespace Platformer
 {
     /// <summary>
     /// Describes general data as a point in space, with rotation + scale.
