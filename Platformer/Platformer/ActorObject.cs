@@ -56,7 +56,14 @@ namespace Platformer
                 _velocity.Y = 0;
                 State = ActorState.Walking;
             }
-            Direction = Velocity.X >= 0 ? ActorDirection.Right : ActorDirection.Left;
+            //The ternary operator used for direction was fine but if not moving it would default to looking right. This should fix that.
+            if(Velocity.X > 0)
+            {
+                Direction = ActorDirection.Right;
+            } else if (Velocity.X < 0)
+            {
+                Direction = ActorDirection.Left;
+            }
             Debug.WriteLine("Coins: " + Coins);
         }
 
