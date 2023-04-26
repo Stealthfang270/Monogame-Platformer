@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Platformer.Colliders;
 
 namespace Platformer
 {
@@ -16,56 +17,52 @@ namespace Platformer
         protected Vector2 position;
         protected Vector2 dimensions;
 
-        protected Collider colliderTop;
-        protected Collider colliderBottom;
-        protected Collider colliderRight;
-        protected Collider colliderLeft;
+        protected TopCollider colliderTop;
+        protected RightCollider colliderRight;
+        protected BottomCollider colliderBottom;
+        protected LeftCollider colliderLeft;
 
         public Platform(Vector2 position, Vector2 dimensions, string texture)
         {
             this.textureName = texture;
-            colliderTop = new Collider(
+            colliderTop = new TopCollider(
                 new Vector2(position.X + 3, position.Y),
-                new Vector2(dimensions.X - 6, 1),
-                Collider.ColliderType.Top);
+                new Vector2(dimensions.X - 6, 1));
 
-            colliderRight = new Collider(
+            colliderRight = new RightCollider(
                new Vector2(position.X + dimensions.X - 1, position.Y + 1),
-               new Vector2(1, dimensions.Y - 2),
-               Collider.ColliderType.Right);
+               new Vector2(1, dimensions.Y - 2));
 
-            colliderBottom = new Collider(
+            colliderBottom = new BottomCollider(
                 new Vector2(position.X + 3, position.Y + dimensions.Y),
-                new Vector2(dimensions.X - 6, 1),
-                Collider.ColliderType.Bottom);
+                new Vector2(dimensions.X - 6, 1));
 
-            colliderLeft = new Collider(
+            colliderLeft = new LeftCollider(
                 new Vector2(position.X, position.Y + 1),
-                new Vector2(1, dimensions.Y - 2),
-                Collider.ColliderType.Left);
+                new Vector2(1, dimensions.Y - 2));
         }
 
         internal void LoadContent(ContentManager content)
         {
             colliderTop.LoadContent(content);
-            colliderBottom.LoadContent(content);
             colliderRight.LoadContent(content);
+            colliderBottom.LoadContent(content);
             colliderLeft.LoadContent(content);
         }
 
         internal void Draw(SpriteBatch spriteBatch)
         {
             colliderTop.Draw(spriteBatch);
-            colliderBottom.Draw(spriteBatch);
             colliderRight.Draw(spriteBatch);
+            colliderBottom.Draw(spriteBatch);
             colliderLeft.Draw(spriteBatch);
         }
 
         internal void ProcessCollisions(ActorObject actor)
         {
             colliderTop.ProcessCollisions(actor);
-            colliderBottom.ProcessCollisions(actor);
             colliderRight.ProcessCollisions(actor);
+            colliderBottom.ProcessCollisions(actor);
             colliderLeft.ProcessCollisions(actor);
         }
     }

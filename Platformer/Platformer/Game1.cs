@@ -62,7 +62,7 @@ namespace Platformer
             if(kbState.IsKeyDown(Keys.Right) == kbState.IsKeyDown(Keys.Left))
             {
                 player.HorizontalStop();
-                player.State = ActorState.Idle;
+                //player.State = ActorState.Idle;
             } else if (kbState.IsKeyDown(Keys.Right))
             {
                 player.MoveHorizontally(1);
@@ -74,6 +74,8 @@ namespace Platformer
             {
                 player.Jump();
             }
+            //player.Update(gameTime);
+            p.ProcessCollisions(player);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
