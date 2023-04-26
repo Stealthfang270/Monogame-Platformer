@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using PlatformerGame;
+using Platformer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +20,7 @@ namespace Platformer
         internal ActorState State = ActorState.Idle;
 
         //Constants
-        protected const int JumpForce = -300;
+        protected const int JumpForce = -270;
         protected const int MoveSpeed = 150;
 
         protected Vector2 _velocity;
@@ -42,12 +42,12 @@ namespace Platformer
             CelPlayer.Update(gameTime);
             _velocity.Y += Game1.Gravity;
             _transform.MovePosition(Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds);
-            if(Math.Abs(_velocity.Y) > Game1.Gravity)
+            if (Math.Abs(_velocity.Y) > Game1.Gravity)
             {
                 State = ActorState.Jump;
                 CelPlayer.Play(CelSet.Jump);
             }
-            if(_transform.Position.Y > Game.Window.ClientBounds.Height - _rectangleBounds.Height)
+            if (_transform.Position.Y > Game.Window.ClientBounds.Height - _rectangleBounds.Height)
             {
                 _transform.SetPosition(_transform.Position.X, Game.Window.ClientBounds.Height - _rectangleBounds.Height);
                 _velocity.Y = 0;
@@ -65,7 +65,7 @@ namespace Platformer
 
         internal void HorizontalStop()
         {
-            if(State == ActorState.Walking)
+            if (State == ActorState.Walking)
             {
                 _velocity = Vector2.Zero;
                 State = ActorState.Idle;
@@ -77,7 +77,7 @@ namespace Platformer
         {
             float previousDirection = _velocity.X;
             _velocity.X = direction * MoveSpeed;
-            if(State != ActorState.Jump)
+            if (State != ActorState.Jump)
             {
                 CelPlayer.Play(CelSet.Run);
                 State = ActorState.Walking;
@@ -91,7 +91,7 @@ namespace Platformer
 
         internal void Land(Rectangle colliderRect)
         {
-            if(_velocity.Y > 0)
+            if (_velocity.Y > 0)
             {
                 _transform.SetPosition(_transform.Position.X, colliderRect.Top - _rectangleBounds.Height + 1);
                 _velocity.Y = 0;
@@ -106,23 +106,23 @@ namespace Platformer
 
         internal void Jump()
         {
-            if(State != ActorState.Jump)
+            if (State != ActorState.Jump)
             {
                 _velocity.Y = JumpForce;
             }
         }
+    }
 
-        internal enum ActorDirection
-        {
-            Right,
-            Left
-        }
+    internal enum ActorDirection
+    {
+        Right,
+        Left
+    }
 
-        internal enum ActorState
-        {
-            Idle,
-            Walking,
-            Jump
-        }
+    internal enum ActorState
+    {
+        Idle,
+        Walking,
+        Jump
     }
 }
