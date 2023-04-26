@@ -32,11 +32,10 @@ namespace Platformer
             bool didCollide = false;
             if (_rectangleBounds.Intersects(player._rectangleBounds))
             {
-                if(player.Coins >= Requirement)
+                if (player.Coins >= Requirement)
                 {
-                    //End le game
+                    didCollide = true;
                 }
-                didCollide = true;
             }
             return didCollide;
         }

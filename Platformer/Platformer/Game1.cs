@@ -14,18 +14,25 @@ namespace Platformer
 
         Transform GO_Transform;
         Transform[] CoinTransforms;
+        Transform GoalTransform;
         ActorObject player;
         Coin[] coins;
+        Goal goal;
 
         Texture2D playerIdle;
         Texture2D playerRun;
         Texture2D playerJump;
         Texture2D coinSprite;
+        Texture2D goalSprite;
+
+        SpriteFont font;
+        SpriteFont font2;
 
         Platform[] p;
 
         Rectangle playerRect = new Rectangle(0, 0, 48, 48);
         Rectangle coinRect = new Rectangle(0, 0, 48, 48);
+        Rectangle goalRect = new Rectangle(0, 0, 96, 96);
         CelAnimationSet playerSet;
         CelAnimationSequence CoinAnim;
 
@@ -56,12 +63,14 @@ namespace Platformer
                 new Transform(new Vector2(120, Window.ClientBounds.Height - 168), 0, 1),
                 new Transform(new Vector2(310, Window.ClientBounds.Height - 193), 0, 1)
             };
+            GoalTransform = new Transform(new Vector2(100, Window.ClientBounds.Height - 371), 0, 1);
             player = new ActorObject(this, GO_Transform, playerRect, playerIdle, playerSet);
             coins = new Coin[]
             {
                 new Coin(1, this, CoinTransforms[0], coinRect, coinSprite, CoinAnim),
                 new Coin(1, this, CoinTransforms[1], coinRect, coinSprite, CoinAnim)
             };
+            goal = new Goal(this, GoalTransform, goalRect, goalSprite);
             Window.Title = "Hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh";
         }
 
@@ -73,6 +82,9 @@ namespace Platformer
             playerRun = Content.Load<Texture2D>("run cycle 48x48");
             playerJump = Content.Load<Texture2D>("player jump 48x48");
             coinSprite = Content.Load<Texture2D>("cat");
+            goalSprite = Content.Load<Texture2D>("Trophy");
+            font = Content.Load<SpriteFont>("Font");
+            font2 = Content.Load<SpriteFont>("Font2");
             CoinAnim = new CelAnimationSequence(coinSprite, 48, 0.5f);
             playerSet = new CelAnimationSet(playerIdle, playerRun, playerJump);
             foreach (var platform in p)
@@ -124,6 +136,13 @@ namespace Platformer
                         }
                     }
                 }
+
+                goal.Update(gameTime);
+                if(goal.HandleCollisions(player))
+                {
+                    gameState = GameState.GameOver;
+                }
+
                 base.Update(gameTime);
             }
             // TODO: Add your update logic here
@@ -141,7 +160,11 @@ namespace Platformer
                 {
                     platform.Draw(_spriteBatch);
                 }
+                _spriteBatch.DrawString(font2, "Collect the cats to get the trophy", new Vector2(430, Window.ClientBounds.Height - 300), Color.Black);
                 base.Draw(gameTime);
+            } else
+            {
+                _spriteBatch.DrawString(font, "Fin", new Vector2(Window.ClientBounds.Width / 2 - 50, Window.ClientBounds.Height / 2 - 50), Color.Black);
             }
             _spriteBatch.End();
             // TODO: Add your drawing code here
