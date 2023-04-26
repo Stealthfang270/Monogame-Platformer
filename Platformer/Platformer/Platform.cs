@@ -57,7 +57,7 @@ namespace Platformer
         internal void Draw(SpriteBatch spriteBatch)
         {
             Rectangle sourceRec = new Rectangle(position.ToPoint(), dimensions.ToPoint());
-            Debug.WriteLine(sourceRec);
+            //Debug.WriteLine(sourceRec);
             spriteBatch.Draw(texture, sourceRec, texture.Bounds, Color.White);
         }
 

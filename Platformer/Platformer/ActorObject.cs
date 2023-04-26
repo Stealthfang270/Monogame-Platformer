@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Platformer;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ namespace Platformer
         //Animation
         CelAnimationPlayer CelPlayer;
         CelAnimationSet CelSet;
+
+        public int Coins = 0;
 
         //States
         ActorDirection Direction = ActorDirection.Right;
@@ -54,6 +57,7 @@ namespace Platformer
                 State = ActorState.Walking;
             }
             Direction = Velocity.X >= 0 ? ActorDirection.Right : ActorDirection.Left;
+            Debug.WriteLine("Coins: " + Coins);
         }
 
         public override void Draw(GameTime gameTime)
