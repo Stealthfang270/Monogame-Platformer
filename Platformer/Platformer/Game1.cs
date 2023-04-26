@@ -29,6 +29,8 @@ namespace Platformer
         CelAnimationSet playerSet;
         CelAnimationSequence CoinAnim;
 
+        GameState gameState = GameState.Active;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -85,56 +87,72 @@ namespace Platformer
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            KeyboardState kbState = Keyboard.GetState();
-            if(kbState.IsKeyDown(Keys.Right) == kbState.IsKeyDown(Keys.Left))
+            if (gameState == GameState.Active)
             {
-                player.HorizontalStop();
-                //player.State = ActorState.Idle;
-            } else if (kbState.IsKeyDown(Keys.Right))
-            {
-                player.MoveHorizontally(1);
-            } else if (kbState.IsKeyDown(Keys.Left))
-            {
-                player.MoveHorizontally(-1);
-            }
-            if(kbState.IsKeyDown(Keys.Space))
-            {
-                player.Jump();
-            }
-            //player.Update(gameTime);
-            foreach (var platform in p)
-            {
-                platform.ProcessCollisions(player);
-            }
-
-            for(int i = 0; i < coins.Length; i++)
-            {
-                if (coins[i] is not null)
+                KeyboardState kbState = Keyboard.GetState();
+                if (kbState.IsKeyDown(Keys.Right) == kbState.IsKeyDown(Keys.Left))
                 {
-                    coins[i].Update(gameTime);
-                    if (coins[i].HandleCollisions(player))
+                    player.HorizontalStop();
+                    //player.State = ActorState.Idle;
+                }
+                else if (kbState.IsKeyDown(Keys.Right))
+                {
+                    player.MoveHorizontally(1);
+                }
+                else if (kbState.IsKeyDown(Keys.Left))
+                {
+                    player.MoveHorizontally(-1);
+                }
+                if (kbState.IsKeyDown(Keys.Space))
+                {
+                    player.Jump();
+                }
+                //player.Update(gameTime);
+                foreach (var platform in p)
+                {
+                    platform.ProcessCollisions(player);
+                }
+
+                for (int i = 0; i < coins.Length; i++)
+                {
+                    if (coins[i] is not null)
                     {
-                        coins[i] = null;
+                        coins[i].Update(gameTime);
+                        if (coins[i].HandleCollisions(player))
+                        {
+                            coins[i] = null;
+                        }
                     }
                 }
+                base.Update(gameTime);
             }
             // TODO: Add your update logic here
 
-            base.Update(gameTime);
+            
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.DarkSalmon); //You know what's better than light salmon? Dark salmon
             _spriteBatch.Begin();
-            foreach (var platform in p)
+            if (gameState == GameState.Active)
             {
-                platform.Draw(_spriteBatch);
+                foreach (var platform in p)
+                {
+                    platform.Draw(_spriteBatch);
+                }
+                base.Draw(gameTime);
             }
             _spriteBatch.End();
             // TODO: Add your drawing code here
 
-            base.Draw(gameTime);
+            
+        }
+
+        public enum GameState
+        {
+            Active,
+            GameOver
         }
     }
 }
