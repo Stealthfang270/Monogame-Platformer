@@ -1,0 +1,7 @@
+1. Player, as per the template, can move left & right and up & down
+2. Player is animated as in the template. To show I know how to use the cel animation sequences, the coins(cats) are also animated.
+3. There are platforms that are visible in the air. The colliders are not visible. The platforms can be landed on and collided with on all sides.
+4. There are exactly 6 platforms in the game.
+5. I'm not sure what qualifies as a beginning, but the player must collect the trophy, and there is an end screen.
+6. There is a new class called coins. The player needs to collect 2 to finish the game.
+7. The collider class is the parent of TopCollider, BottomCollider, RightCollider, and LeftCollider
