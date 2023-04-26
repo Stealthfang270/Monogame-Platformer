@@ -20,7 +20,7 @@ namespace Platformer
         internal ActorState State = ActorState.Idle;
 
         //Constants
-        protected const int JumpForce = -400;
+        protected const int JumpForce = -350;
         protected const int MoveSpeed = 150;
 
         protected Vector2 _velocity;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Platformer.Colliders;
+using System.Diagnostics;
 
 namespace Platformer
 {
@@ -24,6 +25,8 @@ namespace Platformer
 
         public Platform(Vector2 position, Vector2 dimensions, string texture)
         {
+            this.position = position;
+            this.dimensions = dimensions;
             this.textureName = texture;
             colliderTop = new TopCollider(
                 new Vector2(position.X + 3, position.Y),
@@ -44,6 +47,7 @@ namespace Platformer
 
         internal void LoadContent(ContentManager content)
         {
+            texture = content.Load<Texture2D>(textureName);
             colliderTop.LoadContent(content);
             colliderRight.LoadContent(content);
             colliderBottom.LoadContent(content);
@@ -52,10 +56,9 @@ namespace Platformer
 
         internal void Draw(SpriteBatch spriteBatch)
         {
-            colliderTop.Draw(spriteBatch);
-            colliderRight.Draw(spriteBatch);
-            colliderBottom.Draw(spriteBatch);
-            colliderLeft.Draw(spriteBatch);
+            Rectangle sourceRec = new Rectangle(position.ToPoint(), dimensions.ToPoint());
+            Debug.WriteLine(sourceRec);
+            spriteBatch.Draw(texture, sourceRec, texture.Bounds, Color.White);
         }
 
         internal void ProcessCollisions(ActorObject actor)
